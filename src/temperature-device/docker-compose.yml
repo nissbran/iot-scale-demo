@@ -1,0 +1,31 @@
+services:
+
+  device-1-a:
+    image: ${DOCKER_REGISTRY-}temperature-device
+    build:
+      context: .
+    environment:
+      NumberOfDevices: 10
+      GlobalDeviceEndpoint: "global.azure-devices-provisioning.net"
+      IdScope: ${DPS_ID_SCOPE}
+      DevicePrefix: "1a"
+      IntermediateCertFile: "/app/certs/huba_intermediate.pem"
+      IntermediateCertKey: "/app/certs/huba_intermediate.key"
+      IntermediateCertPasswordFile: "/app/certs/huba.pass"
+    volumes:
+      - "./certs/:/app/certs"
+
+  device-1-b:
+    image: ${DOCKER_REGISTRY-}temperature-device
+    build:
+      context: .
+    environment:
+      NumberOfDevices: 10
+      GlobalDeviceEndpoint: "global.azure-devices-provisioning.net"
+      IdScope: ${DPS_ID_SCOPE}
+      DevicePrefix: "1b"
+      IntermediateCertFile: "/app/certs/hubb_intermediate.pem"
+      IntermediateCertKey: "/app/certs/hubb_intermediate.key"
+      IntermediateCertPasswordFile: "/app/certs/hubb.pass"
+    volumes:
+      - "./certs/:/app/certs"
