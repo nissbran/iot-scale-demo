@@ -8,11 +8,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemperatureDevice", "src\temperature-device\TemperatureDevice.csproj", "{BCF33DBA-80D3-4C93-9C1C-DB0E6C2B272F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TemperatureDevice", "src\temperature-device\TemperatureDevice.csproj", "{BCF33DBA-80D3-4C93-9C1C-DB0E6C2B272F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageRouter", "src\router\MessageRouter.csproj", "{D6AB22A6-0FBE-4592-9BA7-877324B7BC9C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageRouter", "src\router\MessageRouter.csproj", "{D6AB22A6-0FBE-4592-9BA7-877324B7BC9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSender", "src\event-sender\EventSender.csproj", "{DCA50C39-7C54-46D7-8740-E55E63248BE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventSender", "src\event-sender\EventSender.csproj", "{DCA50C39-7C54-46D7-8740-E55E63248BE4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspireHost.AppHost", "src\aspire\AspireHost.AppHost.csproj", "{F73B51CB-2AE9-4D42-AC4B-DECBF6752E28}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandSender", "src\command-sender\CommandSender.csproj", "{B0638BF6-7831-4114-B059-8F73C0B32C80}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,6 +36,14 @@ Global
 		{DCA50C39-7C54-46D7-8740-E55E63248BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DCA50C39-7C54-46D7-8740-E55E63248BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DCA50C39-7C54-46D7-8740-E55E63248BE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F73B51CB-2AE9-4D42-AC4B-DECBF6752E28}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F73B51CB-2AE9-4D42-AC4B-DECBF6752E28}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F73B51CB-2AE9-4D42-AC4B-DECBF6752E28}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F73B51CB-2AE9-4D42-AC4B-DECBF6752E28}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0638BF6-7831-4114-B059-8F73C0B32C80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B0638BF6-7831-4114-B059-8F73C0B32C80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B0638BF6-7831-4114-B059-8F73C0B32C80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B0638BF6-7831-4114-B059-8F73C0B32C80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

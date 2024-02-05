@@ -38,5 +38,5 @@ finally
     host.Dispose();
     Log.Information("Shut down complete for {Application}", appName);
     Log.CloseAndFlush();
-    await Task.Delay(1000);
+    await Task.Delay(2000);
 }

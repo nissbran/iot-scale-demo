@@ -1,10 +1,10 @@
 ﻿{
   "profiles": {
-    "Router": {
+    "CommandSender": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
-      "applicationUrl": "https://localhost:7278;http://localhost:8080",
+      "applicationUrl": "https://localhost:7274;http://localhost:8081",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

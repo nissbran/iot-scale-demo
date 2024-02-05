@@ -30,7 +30,11 @@ module iot_hub_a '../modules/iothub/iothub.bicep' = {
   params: {
     location: location
     iotHubName: '${prefix}-iot-hub-a'
+    evenhubEndpointName: event_hub.outputs.eventHubName
   }
+  dependsOn: [
+    event_hub
+  ]
 }
 
 module iot_hub_b '../modules/iothub/iothub.bicep' = {
@@ -39,7 +43,11 @@ module iot_hub_b '../modules/iothub/iothub.bicep' = {
   params: {
     location: location
     iotHubName: '${prefix}-iot-hub-b'
+    evenhubEndpointName: event_hub.outputs.eventHubName
   }
+  dependsOn: [
+    event_hub
+  ]
 }
 
 module dps '../modules/dps/dps.bicep' = {

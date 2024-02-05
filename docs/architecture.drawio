@@ -1,38 +1,11 @@
 <mxfile host="65bd71144e" scale="2" border="0">
     <diagram id="bpoPaQeS03VnUoz4qxf3" name="Page-1">
-        <mxGraphModel dx="3088" dy="366" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="3888" dy="670" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
                 <mxCell id="130" value="" style="rounded=0;dashed=1;strokeColor=#413eea;dashPattern=8 8;fillColor=none;" parent="1" vertex="1">
                     <mxGeometry x="-2200" y="250" width="90" height="160" as="geometry"/>
-                </mxCell>
-                <mxCell id="93" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;fillColor=#60a917;strokeColor=#2D7600;" parent="1" edge="1">
-                    <mxGeometry width="100" relative="1" as="geometry">
-                        <mxPoint x="-2180" y="592" as="sourcePoint"/>
-                        <mxPoint x="-2080" y="592" as="targetPoint"/>
-                        <Array as="points"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="96" value="Ingress" style="edgeLabel;align=center;verticalAlign=middle;resizable=0;points=[];" parent="93" vertex="1" connectable="0">
-                    <mxGeometry x="0.1652" y="4" relative="1" as="geometry">
-                        <mxPoint x="-11" y="2" as="offset"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="95" value="" style="edgeStyle=none;orthogonalLoop=1;jettySize=auto;fillColor=#a20025;strokeColor=#6F0000;" parent="1" edge="1">
-                    <mxGeometry width="100" relative="1" as="geometry">
-                        <mxPoint x="-2180" y="612" as="sourcePoint"/>
-                        <mxPoint x="-2080" y="612" as="targetPoint"/>
-                        <Array as="points"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="97" value="Egress" style="edgeLabel;align=center;verticalAlign=middle;resizable=0;points=[];" parent="95" vertex="1" connectable="0">
-                    <mxGeometry x="0.2252" y="3" relative="1" as="geometry">
-                        <mxPoint x="-13" y="2" as="offset"/>
-                    </mxGeometry>
-                </mxCell>
-                <mxCell id="100" value="Subnet" style="rounded=0;dashed=1;strokeColor=#413eea;fillColor=none;" parent="1" vertex="1">
-                    <mxGeometry x="-2057" y="602" width="50" height="20" as="geometry"/>
                 </mxCell>
                 <mxCell id="127" value="DPS 1" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/iot/Device_Provisioning_Services.svg;" parent="1" vertex="1">
                     <mxGeometry x="-2177.3" y="265.38" width="44.61" height="46" as="geometry"/>
@@ -58,7 +31,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="128" value="EH&#10;Telemetry&#10;" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/iot/Event_Hubs.svg;" parent="1" vertex="1">
+                <mxCell id="128" value="EH&#10;Telemetry&#10;and messaging" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/iot/Event_Hubs.svg;" parent="1" vertex="1">
                     <mxGeometry x="-1810" y="290.88" width="57.93" height="51.88" as="geometry"/>
                 </mxCell>
                 <mxCell id="129" value="DPS 2&#10;Failover" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/iot/Device_Provisioning_Services.svg;" parent="1" vertex="1">
@@ -121,14 +94,14 @@
                 <mxCell id="168" style="edgeStyle=none;" edge="1" parent="1" source="141" target="151">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="-1860" y="155"/>
+                            <mxPoint x="-1880" y="123"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="141" value="Cloud to device&#10;messages" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/integration/Service_Bus.svg;" parent="1" vertex="1">
-                    <mxGeometry x="-1809.57" y="130" width="57.5" height="50.74" as="geometry"/>
+                <mxCell id="141" value="Cloud to device&#10;messages?" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/integration/Service_Bus.svg;" parent="1" vertex="1">
+                    <mxGeometry x="-1790" y="98" width="57.5" height="50.74" as="geometry"/>
                 </mxCell>
-                <mxCell id="142" value="Data Lake" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/analytics/Data_Lake_Analytics.svg;" parent="1" vertex="1">
+                <mxCell id="142" value="Data Lake Fabric" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/analytics/Data_Lake_Analytics.svg;" parent="1" vertex="1">
                     <mxGeometry x="-1562" y="420" width="50" height="50" as="geometry"/>
                 </mxCell>
                 <mxCell id="143" value="CertA&#10;" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.concepts.file_key;" parent="1" vertex="1">
@@ -143,11 +116,11 @@
                         <mxPoint x="-1552.56" y="316.81999999999994" as="targetPoint"/>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="162" style="edgeStyle=none;entryX=0.042;entryY=0.431;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="139" target="157">
+                <mxCell id="162" style="edgeStyle=none;entryX=-0.01;entryY=0.733;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="139" target="157">
                     <mxGeometry relative="1" as="geometry">
                         <mxPoint x="-1666" y="250" as="targetPoint"/>
                         <Array as="points">
-                            <mxPoint x="-1666" y="185"/>
+                            <mxPoint x="-1666" y="199"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -156,6 +129,13 @@
                         <mxPoint x="-1570" y="370" as="targetPoint"/>
                         <Array as="points">
                             <mxPoint x="-1666" y="370"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="174" style="edgeStyle=none;entryX=0.954;entryY=0.522;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="139" target="173">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-1700" y="232"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -176,27 +156,48 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
+                <mxCell id="175" style="edgeStyle=none;entryX=0.061;entryY=0.612;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="151" target="173">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-1870" y="236"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="176" value="Lookup" style="edgeLabel;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="175">
+                    <mxGeometry x="0.0708" y="-2" relative="1" as="geometry">
+                        <mxPoint as="offset"/>
+                    </mxGeometry>
+                </mxCell>
                 <mxCell id="151" value="Command sender" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/other/Worker_Container_App.svg;" parent="1" vertex="1">
                     <mxGeometry x="-1940" y="162.63000000000005" width="48" height="46.59" as="geometry"/>
                 </mxCell>
                 <mxCell id="167" style="edgeStyle=none;entryX=0.966;entryY=0.491;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="157" target="141">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
-                            <mxPoint x="-1660" y="155"/>
+                            <mxPoint x="-1650" y="123"/>
                         </Array>
                     </mxGeometry>
+                </mxCell>
+                <mxCell id="171" style="edgeStyle=none;" edge="1" parent="1" source="157" target="151">
+                    <mxGeometry relative="1" as="geometry"/>
                 </mxCell>
                 <mxCell id="157" value="Applications" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/other/Worker_Container_App.svg;" vertex="1" parent="1">
                     <mxGeometry x="-1567" y="164.70000000000007" width="48" height="46.59" as="geometry"/>
                 </mxCell>
                 <mxCell id="158" value="App configuration" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/integration/App_Configuration.svg;" vertex="1" parent="1">
-                    <mxGeometry x="-1948" y="29.99999999999997" width="64" height="68" as="geometry"/>
+                    <mxGeometry x="-2050" y="39.99999999999997" width="64" height="68" as="geometry"/>
                 </mxCell>
                 <mxCell id="161" value="CertB&#10;" style="sketch=0;pointerEvents=1;shadow=0;dashed=0;strokeColor=none;fillColor=#505050;labelPosition=center;verticalLabelPosition=bottom;verticalAlign=top;outlineConnect=0;align=center;shape=mxgraph.office.concepts.file_key;" vertex="1" parent="1">
                     <mxGeometry x="-2390" y="540" width="48" height="53" as="geometry"/>
                 </mxCell>
                 <mxCell id="163" value="Alerts etc" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/integration/Service_Bus.svg;" vertex="1" parent="1">
                     <mxGeometry x="-1567" y="342.76" width="57.5" height="50.74" as="geometry"/>
+                </mxCell>
+                <mxCell id="170" value="Stream analytics" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/analytics/Stream_Analytics_Jobs.svg;" vertex="1" parent="1">
+                    <mxGeometry x="-2052" y="508" width="68" height="57.99999999999999" as="geometry"/>
+                </mxCell>
+                <mxCell id="173" value="Device Catalog" style="aspect=fixed;points=[];align=center;image;fontSize=12;image=img/lib/azure2/databases/SQL_Database.svg;" vertex="1" parent="1">
+                    <mxGeometry x="-1795.03" y="212.67000000000002" width="28" height="37.33" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>

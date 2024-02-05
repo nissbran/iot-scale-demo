@@ -10,9 +10,9 @@ public class LocalhostKafkaConnectionProvider : IKafkaConnectionProvider
         //BootstrapServers = "localhost:9092",
     };
     
-    public ConsumerConfig GetConsumer(string? groupId = null!) => new ConsumerConfig
+    public ConsumerConfig GetConsumer(string groupId) => new ConsumerConfig
     {
-        GroupId = groupId ?? KafkaDefaultConf.DefaultGroupId,
+        GroupId = groupId,
         BootstrapServers = "localhost:9092,localhost:9093,localhost:9094",
         //BootstrapServers = "localhost:9092",
         //GroupInstanceId = instanceId,

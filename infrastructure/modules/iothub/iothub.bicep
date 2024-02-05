@@ -13,7 +13,16 @@ param skuName string = 'S1'
 @maxValue(1)
 param capacityUnits int = 1
 
-var consumerGroupName = '${iotHubName}/events/cg1'
+param evenhubEndpointName string
+
+resource eh 'Microsoft.EventHub/namespaces@2023-01-01-preview' existing = {
+  name: evenhubEndpointName
+}
+
+resource sharedAccessPolicy 'Microsoft.EventHub/namespaces/authorizationRules@2023-01-01-preview' existing = {
+  name: 'iot-hubs-shared-key'
+  parent: eh
+}
 
 resource iotHub 'Microsoft.Devices/IotHubs@2023-06-30' = {
   name: iotHubName
@@ -24,6 +33,46 @@ resource iotHub 'Microsoft.Devices/IotHubs@2023-06-30' = {
         retentionTimeInDays: 1
         partitionCount: 2
       }
+    }
+    routing: {
+      endpoints: {
+        eventHubs: [
+          {
+            name: 'iot-events'
+            connectionString: 'Endpoint=sb://${eh.name}.servicebus.windows.net;SharedAccessKeyName=iot-hubs-shared-key;SharedAccessKey=${sharedAccessPolicy.listKeys().primaryKey};EntityPath=iot-events'
+            authenticationType: 'keyBased'
+            subscriptionId: subscription().subscriptionId
+            resourceGroup: resourceGroup().name
+          }
+        ]
+      }
+      routes: [
+        {
+          name: 'all-telemetry'
+          endpointNames: [
+            'iot-events'
+          ]
+          isEnabled: true
+          source: 'DeviceMessages'
+        }
+        {
+          name: 'connection-status'
+          endpointNames: [
+            'iot-events'
+          ]
+          isEnabled: true
+          source: 'DeviceConnectionStateEvents'
+        }
+      ]
+      enrichments: [
+        {
+          endpointNames: [
+            'iot-events'
+          ]
+          key: 'hub'
+          value: '$iothubname'
+        }
+      ]
     }
     cloudToDevice: {
       defaultTtlAsIso8601: 'PT1H'
@@ -58,4 +107,4 @@ resource iotHub 'Microsoft.Devices/IotHubs@2023-06-30' = {
 //   ]
 // }
 
-output iotName string = iotHub.name 
+output iotName string = iotHub.name

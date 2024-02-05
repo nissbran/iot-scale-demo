@@ -18,9 +18,9 @@ public class EventHubKafkaConnectionProvider : IKafkaConnectionProvider
         throw new NotImplementedException();
     }
 
-    public ConsumerConfig GetConsumer(string? groupId = null) => new ConsumerConfig
+    public ConsumerConfig GetConsumer(string groupId) => new ConsumerConfig
     {
-        GroupId = groupId ?? KafkaDefaultConf.DefaultGroupId,
+        GroupId = groupId,
         BootstrapServers = _bootstrapServers,
         SecurityProtocol = SecurityProtocol.SaslSsl,
         SocketTimeoutMs = 60000,                //this corresponds to the Consumer config `request.timeout.ms`

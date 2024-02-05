@@ -8,14 +8,13 @@ public class ConsumerService : BackgroundService
     
     private readonly List<RobustConsumer> _robustConsumers = new List<RobustConsumer>();
         
-    public ConsumerService(IKafkaConnectionProvider connectionProvider, IConfiguration configuration, EventConsumedMetrics metrics)
+    public ConsumerService(IKafkaConnectionProvider connectionProvider, MessageMediator messageMediator, IConfiguration configuration, EventConsumedMetrics metrics)
     {
         var topic = configuration["Kafka:Topic"];
-        //_robustConsumer = new RobustConsumer(connectionProvider.GetNoAutoCommitConsumerConfig("consumer-group"), metrics, 1, "iot-events");
-
+        
         for (int i = 0; i < 10; i++)
         {
-            _robustConsumers.Add(new RobustConsumer(connectionProvider.GetConsumer("consumer-group"), metrics, i, topic ?? "events"));
+            _robustConsumers.Add(new RobustConsumer(connectionProvider.GetConsumer("consumer-group"), messageMediator, metrics, i, topic ?? "events"));
         }
     }
 

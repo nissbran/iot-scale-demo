@@ -30,10 +30,11 @@ resource eventHubMessageRouter 'Microsoft.EventHub/namespaces/eventhubs/consumer
 }
 
 resource eventHubSharedKey 'Microsoft.EventHub/namespaces/authorizationRules@2021-11-01' = {
-  name: 'string'
+  name: 'iot-hubs-shared-key'
   parent: eventHubNs
   properties: {
     rights: [ 'Send', 'Listen', 'Manage' ]
   }
 }
 
+output eventHubName string = eventHubNs.name

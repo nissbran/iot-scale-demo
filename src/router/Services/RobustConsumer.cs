@@ -1,4 +1,5 @@
 ﻿using Confluent.Kafka;
+using MessageRouter.Contract;
 using MessageRouter.Telemetry;
 using Microsoft.Azure.Amqp;
 using Microsoft.Azure.Amqp.Encoding;
@@ -8,6 +9,7 @@ namespace MessageRouter.Services;
 
 public class RobustConsumer
 {
+    private readonly MessageMediator _messageMediator;
     private readonly EventConsumedMetrics _metrics;
     private readonly int _number;
     private readonly string _topic;
@@ -17,8 +19,9 @@ public class RobustConsumer
     private Task? _consumerTask;
     private bool _stopping = false;
     
-    public RobustConsumer(ConsumerConfig config, EventConsumedMetrics metrics, int number, string topic = KafkaDefaultConf.DefaultTopic, int commitPeriod = 1)
+    public RobustConsumer(ConsumerConfig config, MessageMediator messageMediator, EventConsumedMetrics metrics, int number, string topic, int commitPeriod = 1)
     {
+        _messageMediator = messageMediator;
         _metrics = metrics;
         _number = number;
         _topic = topic;
@@ -31,7 +34,7 @@ public class RobustConsumer
         _consumerTask = Task.Run(async () => await Run(cancellationToken), cancellationToken);
     }
     
-    private Task Run(CancellationToken cancellationToken)
+    private async Task Run(CancellationToken cancellationToken)
     {
         Log.Information("Starting consumer on topic {Topic}", _topic);
         _consumer.Subscribe(_topic);
@@ -41,49 +44,27 @@ public class RobustConsumer
             try
             {
                 var messageConsumeResult = _consumer.Consume(cancellationToken);
-
-                var client = "";
-                var messageSource = "";
-                var hub = "";
                 
-                foreach (var header in messageConsumeResult.Message.Headers)
-                {
-                    switch (header.Key)
-                    {
-                        case "iothub-connection-device-id":
-                        {
-                            var headerValueBytes = header.GetValueBytes();
-                            var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
-                            client = value.ToString();
-                            break;
-                        }
-                        case "iothub-message-source":
-                        {
-                            var headerValueBytes = header.GetValueBytes();
-                            var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
-                            messageSource = value.ToString();
-                            break;
-                        }
-                        case "hub":
-                        {
-                            var headerValueBytes = header.GetValueBytes();
-                            var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
-                            hub = value.ToString();
-                            break;
-                        }
-                    }
-                }
+                var message = ParseKafkaMessage(messageConsumeResult.Message);
                 
                 _metrics.IncrementMessages();
-                // var message = JsonSerializer.Deserialize(messageConsumeResult.Message.Value, typeof(DefaultMessage));
-                // var defaultMessage = message as DefaultMessage;
-                Log.Information("Message consumed Type: {Type}, Client: {Client}, Partition: {Partition}, Offset: {Offset}, Hub: {Hub}", 
-                    messageSource,
-                    client,
-                    messageConsumeResult.Partition.Value, 
-                    messageConsumeResult.Offset,
-                    hub);
                 
+                //Log.Information("Message consumed Type: {Type}, Client: {Client}, Partition: {Partition}, Offset: {Offset}, Hub: {Hub}", 
+                //    message.Type,
+                //    message.DeviceId,
+                //    messageConsumeResult.Partition.Value, 
+                //    messageConsumeResult.Offset,
+                //    "");
+                
+                var typedMessage = MessageDeserializer.Deserialize(message);
+                
+                if (typedMessage == null)
+                {
+                    Log.Warning("Message type not found {Type}, source: {Source}", message.Type, message.Source);
+                    continue;
+                }
+                
+                await _messageMediator.RouteMessage(typedMessage);
                 
                 // if (messageConsumeResult.Offset % _commitPeriod == 0)
                 //     _consumer.Commit(messageConsumeResult);
@@ -111,7 +92,44 @@ public class RobustConsumer
             
         //Log.Information("Number of messages fetched: {NumberOfMessages}", _metrics.);
 
-        return Task.CompletedTask;
+    }
+
+    private IotMessage ParseKafkaMessage(Message<Ignore, string> message)
+    {
+        var deviceId = "";
+        var messageSource = "";
+        var hub = "";
+        var type = "";
+                
+        foreach (var header in message.Headers)
+        {
+            switch (header.Key)
+            {
+                case "iothub-connection-device-id":
+                {
+                    var headerValueBytes = header.GetValueBytes();
+                    var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
+                    deviceId = value.ToString();
+                    break;
+                }
+                case "iothub-message-source":
+                {
+                    var headerValueBytes = header.GetValueBytes();
+                    var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
+                    messageSource = value.ToString();
+                    break;
+                }
+                case "type":
+                {
+                    var headerValueBytes = header.GetValueBytes();
+                    var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
+                    type = value.ToString();
+                    break;
+                }
+            }
+        }
+        
+        return new IotMessage(deviceId, type, messageSource, message.Value);
     }
 
     public void Stop()

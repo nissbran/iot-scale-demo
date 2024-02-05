@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using Dapr;
+using MessageRouter.MessageHandlers;
 using MessageRouter.Services;
 using MessageRouter.Telemetry;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +13,7 @@ internal static class ApplicationConfiguration
     public static WebApplication ConfigureServices(this WebApplicationBuilder builder)
     {
         builder.Services.AddHealthChecks();
+        builder.Services.AddDaprClient();
         builder.Services.AddSingleton<EventConsumedMetrics>();
         builder.Services.AddServiceDiscovery();
         builder.Services.ConfigureHttpClientDefaults(http =>
@@ -25,6 +27,14 @@ internal static class ApplicationConfiguration
 
         builder.Services.AddSingleton<IKafkaConnectionProvider, EventHubKafkaConnectionProvider>();
         builder.Services.AddHostedService<ConsumerService>();
+
+        builder.Services.AddSingleton<MessageMediator>();
+        builder.Services.Scan(scan => scan
+            .FromAssembliesOf(typeof(IMessageHandler))
+            .AddClasses(classes => classes.AssignableTo(typeof(IMessageHandler)))
+            .AsImplementedInterfaces()
+        );
+        
         return builder.Build();
     }
 
@@ -79,7 +89,7 @@ internal static class ApplicationConfiguration
             
             [Topic("pubsub", "iot-events")] 
             [TopicMetadata("rawPayload", "true")]
-            async (HttpContext context, [FromBody]Message message) =>
+            async (HttpContext context, [FromBody]DataMessage message) =>
         {
             Log.Information("Received message: {Temperature}.", message.Temperature);
 
@@ -90,7 +100,7 @@ internal static class ApplicationConfiguration
     }
 }
 
-public class Message 
+public class DataMessage 
 {
     public int Temperature { get; set; }
 

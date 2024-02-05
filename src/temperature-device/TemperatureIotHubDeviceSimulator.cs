@@ -12,6 +12,7 @@ public class TemperatureIotHubDeviceSimulator : IHostedService
     private readonly int _numberOfDevices;
     private readonly string? _devicePrefix;
     private readonly Task[] _tasks;
+    private readonly Task[] _subTasks;
     private readonly ConcurrentDictionary<string, TemperatureIotHubDevice> _devices = new();
     private readonly CancellationTokenSource _cancellationTokenSource = new();
 
@@ -22,6 +23,7 @@ public class TemperatureIotHubDeviceSimulator : IHostedService
         _deviceRegistrar = deviceRegistrar;
         _numberOfDevices = configuration.GetValue<int>("NumberOfDevices");
         _tasks = new Task[_numberOfDevices];
+        _subTasks = new Task[_numberOfDevices];
         _devicePrefix = configuration["DevicePrefix"];
     }
 
@@ -38,6 +40,10 @@ public class TemperatureIotHubDeviceSimulator : IHostedService
             {
                 var device = await _deviceRegistrar.RegisterDeviceAsync($"client_{_devicePrefix}_{deviceNumber + 1:000}", _cancellationTokenSource.Token);
                 _devices.TryAdd(device.DeviceId, device);
+                _subTasks[deviceNumber] = Task.Run(async () =>
+                {
+                    await device.StartSubscription(_cancellationTokenSource.Token);
+                }, cancellationToken);
                 await device.SendMessagesAsync(_cancellationTokenSource.Token);
             }, cancellationToken);
         }
