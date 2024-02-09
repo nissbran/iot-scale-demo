@@ -2,6 +2,15 @@
 
 This bicep deploys 2 iot hubs with 1 dps service
 
+Create your config file **main.bicepparam** with the following content:
+
+```bicep
+using 'main.bicep'
+
+param location = 'northeurope'
+param prefix = '<your prefix>'
+```
+
 To deploy:
 
 ```pwsh

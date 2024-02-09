@@ -7,7 +7,7 @@ using Serilog;
 
 namespace MessageRouter.Services;
 
-public class RobustConsumer
+public class IotEventsConsumer
 {
     private readonly MessageMediator _messageMediator;
     private readonly EventConsumedMetrics _metrics;
@@ -19,7 +19,7 @@ public class RobustConsumer
     private Task? _consumerTask;
     private bool _stopping = false;
     
-    public RobustConsumer(ConsumerConfig config, MessageMediator messageMediator, EventConsumedMetrics metrics, int number, string topic, int commitPeriod = 1)
+    public IotEventsConsumer(ConsumerConfig config, MessageMediator messageMediator, EventConsumedMetrics metrics, int number, string topic, int commitPeriod = 1)
     {
         _messageMediator = messageMediator;
         _metrics = metrics;
@@ -100,36 +100,39 @@ public class RobustConsumer
         var messageSource = "";
         var hub = "";
         var type = "";
+        var opType = "";
                 
         foreach (var header in message.Headers)
         {
             switch (header.Key)
             {
                 case "iothub-connection-device-id":
-                {
-                    var headerValueBytes = header.GetValueBytes();
-                    var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
-                    deviceId = value.ToString();
+                    deviceId = ParseHeader(header);
                     break;
-                }
                 case "iothub-message-source":
-                {
-                    var headerValueBytes = header.GetValueBytes();
-                    var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
-                    messageSource = value.ToString();
+                    messageSource = ParseHeader(header);
                     break;
-                }
+                case "opType":
+                    opType = ParseHeader(header);
+                    break;
+                case "hubName":
+                    hub = ParseHeader(header);
+                    break;
                 case "type":
-                {
-                    var headerValueBytes = header.GetValueBytes();
-                    var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
-                    type = value.ToString();
+                    type = ParseHeader(header);
                     break;
-                }
             }
         }
         
-        return new IotMessage(deviceId, type, messageSource, message.Value);
+        return new IotMessage(deviceId, type, messageSource, message.Value, hub, opType);
+    }
+
+    private static string? ParseHeader(IHeader header)
+    {
+        var headerValueBytes = header.GetValueBytes();
+        var value = AmqpEncoding.DecodeObject(new ByteBuffer(headerValueBytes, 0, headerValueBytes.Length));
+        var messageSource = value.ToString();
+        return messageSource;
     }
 
     public void Stop()

@@ -21,13 +21,21 @@ public class DeviceRegistrationHandler : MessageHandler<RegisterDevice>
     {
         _eventConsumedMetrics.IncrementDeviceRegistered();
         _logger.LogInformation("Device registered {DeviceId}", message.DeviceId);
-        await _daprClient.SaveStateAsync("device-catalog", message.DeviceId, new DeviceRegistrationState
+        try
         {
-            DeviceId = message.DeviceId,
-            AssignedHub = message.AssignedHub,
-            Location = message.Location,
-            DeviceType = message.DeviceType
-        });
+            await _daprClient.SaveStateAsync("device-catalog", message.DeviceId, new DeviceRegistrationState
+            {
+                DeviceId = message.DeviceId,
+                AssignedHub = message.AssignedHub,
+                Location = message.Location,
+                DeviceType = message.DeviceType
+            });
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error saving device registration state");
+            return new MessageHandlingResult(false, e.Message);
+        }
         return new MessageHandlingResult(true);
     }
 }

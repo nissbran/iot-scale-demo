@@ -119,6 +119,7 @@ internal static class ObservabilityConfiguration
 
                 metricsBuilder
                     .AddConsumedEventsMetrics()
+                    .AddIotHubConnectionMetrics()
                     .SetResourceBuilder(resourceBuilder)
                     .AddHttpClientInstrumentation()
                     .AddRuntimeInstrumentation()

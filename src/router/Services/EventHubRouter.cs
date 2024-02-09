@@ -4,23 +4,21 @@ namespace MessageRouter.Services;
 
 public class ConsumerService : BackgroundService
 {
-    //private readonly RobustConsumer _robustConsumer;
-    
-    private readonly List<RobustConsumer> _robustConsumers = new List<RobustConsumer>();
+    private readonly List<IotEventsConsumer> _consumers = new();
         
     public ConsumerService(IKafkaConnectionProvider connectionProvider, MessageMediator messageMediator, IConfiguration configuration, EventConsumedMetrics metrics)
     {
         var topic = configuration["Kafka:Topic"];
         
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < 1; i++)
         {
-            _robustConsumers.Add(new RobustConsumer(connectionProvider.GetConsumer("consumer-group"), messageMediator, metrics, i, topic ?? "events"));
+            _consumers.Add(new IotEventsConsumer(connectionProvider.GetConsumer("consumer-group"), messageMediator, metrics, i, topic ?? "events"));
         }
     }
 
     protected override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        foreach (var consumer in _robustConsumers)
+        foreach (var consumer in _consumers)
         {
             consumer.Start(stoppingToken);
         }
@@ -29,7 +27,7 @@ public class ConsumerService : BackgroundService
 
     public override void Dispose()
     {
-        foreach (var consumer in _robustConsumers)
+        foreach (var consumer in _consumers)
         {
             consumer.Stop();
         }

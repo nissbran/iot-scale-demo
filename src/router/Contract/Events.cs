@@ -1,7 +1,7 @@
 ﻿namespace MessageRouter.Contract;
 
 
-public record IotMessage(string DeviceId, string Type, string Source, string Payload);
+public record IotMessage(string DeviceId, string Type, string Source, string Payload, string HubName, string OpType);
 
 public abstract class DeviceToCloudMessage
 {
@@ -32,4 +32,14 @@ public class TemperatureTooHighAlert : CommandMessage
 {
     public decimal Threshold { get; init; }
     public decimal Temperature { get; init; }
+}
+
+public class DeviceConnected : CommandMessage
+{
+    public string SequenceNumber { get; init; }
+}
+
+public class DeviceDisconnected : CommandMessage
+{
+    public string SequenceNumber { get; init; }
 }

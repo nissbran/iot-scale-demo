@@ -5,7 +5,7 @@ services:
     build:
       context: .
     environment:
-      NumberOfDevices: 100
+      NumberOfDevices: 10
       GlobalDeviceEndpoint: "global.azure-devices-provisioning.net"
       IdScope: ${DPS_ID_SCOPE}
       DevicePrefix: "1a"
@@ -20,7 +20,7 @@ services:
     build:
       context: .
     environment:
-      NumberOfDevices: 100
+      NumberOfDevices: 10
       GlobalDeviceEndpoint: "global.azure-devices-provisioning.net"
       IdScope: ${DPS_ID_SCOPE}
       DevicePrefix: "1b"

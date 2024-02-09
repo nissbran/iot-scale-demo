@@ -1,17 +1,11 @@
 targetScope = 'subscription'
 
 param rgDemo string = 'rg-iot-demo'
-param rgSimDevices string = 'rg-iot-sim-devices'
-param prefix string = 'nisstest'
+param prefix string
 param location string
 
 resource rg_demo 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: rgDemo
-  location: location
-}
-
-resource rg_sim_devices 'Microsoft.Resources/resourceGroups@2023-07-01' = {
-  name: rgSimDevices
   location: location
 }
 
@@ -61,29 +55,35 @@ module dps '../modules/dps/dps.bicep' = {
   }
 }
 
-module storage '../modules/storage/storageaccount.bicep' = {
-  scope: rg_demo
-  name: 'storage'
-  params: {
-    location: location
-    prefix: prefix
-  }
-}
+// param rgSimDevices string = 'rg-iot-sim-devices'
+// resource rg_sim_devices 'Microsoft.Resources/resourceGroups@2023-07-01' = {
+//   name: rgSimDevices
+//   location: location
+// }
 
-module registry '../modules/containers/registry.bicep' = {
-  scope: rg_sim_devices
-  name: 'registry'
-  params: {
-    location: location
-    name: prefix
-  }
-}
+// module storage '../modules/storage/storageaccount.bicep' = {
+//   scope: rg_demo
+//   name: 'storage'
+//   params: {
+//     location: location
+//     prefix: prefix
+//   }
+// }
 
-module aca_env '../modules/containers/aca-env.bicep' = {
-  scope: rg_sim_devices
-  name: 'aca_env'
-  params: {
-    location: location
-    name: prefix
-  }
-}
+// module registry '../modules/containers/registry.bicep' = {
+//   scope: rg_sim_devices
+//   name: 'registry'
+//   params: {
+//     location: location
+//     name: prefix
+//   }
+// }
+
+// module aca_env '../modules/containers/aca-env.bicep' = {
+//   scope: rg_sim_devices
+//   name: 'aca_env'
+//   params: {
+//     location: location
+//     name: prefix
+//   }
+// }

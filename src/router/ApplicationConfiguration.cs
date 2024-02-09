@@ -15,6 +15,7 @@ internal static class ApplicationConfiguration
         builder.Services.AddHealthChecks();
         builder.Services.AddDaprClient();
         builder.Services.AddSingleton<EventConsumedMetrics>();
+        builder.Services.AddSingleton<IotHubConnectionMetrics>();
         builder.Services.AddServiceDiscovery();
         builder.Services.ConfigureHttpClientDefaults(http =>
         {

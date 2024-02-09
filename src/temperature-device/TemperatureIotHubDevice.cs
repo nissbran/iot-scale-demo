@@ -29,26 +29,18 @@ public class TemperatureIotHubDevice : IDisposable
     public async Task SendMessagesAsync(CancellationToken stoppingToken)
     {
         Log.Information("Device {DeviceId} registering", _deviceId);
-        using var registerMessage = new Message(
-            JsonSerializer.SerializeToUtf8Bytes(new RegisterDevice(_deviceId, _assignedHub, "NorthEurope", "TemperatureSensor")));
-        registerMessage.Properties.Add("type", nameof(RegisterDevice));
-        await _client.SendEventAsync(registerMessage, stoppingToken);
+        await SendMessage(stoppingToken, new RegisterDevice(_deviceId, _assignedHub, "NorthEurope", "TemperatureSensor"));
         
         while (!_stopping && !stoppingToken.IsCancellationRequested)
         {
             try
             {
                 var temperatureMessage = new TemperatureTelemetry(_deviceId, new Random().Next(10, 31));
-                using var telemetryMessage = new Message(JsonSerializer.SerializeToUtf8Bytes(temperatureMessage));
-                telemetryMessage.Properties.Add("type", nameof(TemperatureTelemetry));
-                await _client.SendEventAsync(telemetryMessage, stoppingToken);
+                await SendMessage(stoppingToken, temperatureMessage);
 
                 if (temperatureMessage.Temperature >= 30)
                 {
-                    var alertMessage = new TemperatureTooHighAlert(_deviceId, 30, temperatureMessage.Temperature);
-                    using var message = new Message(JsonSerializer.SerializeToUtf8Bytes(alertMessage));
-                    message.Properties.Add("type", nameof(TemperatureTooHighAlert));
-                    await _client.SendEventAsync(message, stoppingToken);
+                    await SendMessage(stoppingToken, new TemperatureTooHighAlert(_deviceId, 30, temperatureMessage.Temperature));
                 }
                 await Task.Delay(1000, stoppingToken);
             }
@@ -59,6 +51,13 @@ public class TemperatureIotHubDevice : IDisposable
         }
         
         Log.Information("Device {DeviceId} stopped sending messages.", _deviceId);
+    }
+
+    private async ValueTask SendMessage<T>(CancellationToken stoppingToken, T messageToSend)
+    {
+        using var message = new Message(JsonSerializer.SerializeToUtf8Bytes(messageToSend));
+        message.Properties.Add("type", typeof(T).Name);
+        await _client.SendEventAsync(message, stoppingToken);
     }
 
     public async Task StartSubscription(CancellationToken stoppingToken)

@@ -1,6 +1,5 @@
 using System.Diagnostics.Metrics;
 using System.Net;
-using OpenTelemetry.Metrics;
 
 namespace MessageRouter.Telemetry;
 
@@ -56,14 +55,5 @@ public class EventConsumedMetrics : IDisposable
     public void Dispose()
     {
         _meter.Dispose();
-    }
-}
-
-public static class MeterProviderExtensions
-{
-    internal static MeterProviderBuilder AddConsumedEventsMetrics(this MeterProviderBuilder builder)
-    {
-        builder.AddMeter(EventConsumedMetrics.InstrumentationName);
-        return builder.AddInstrumentation(provider => provider.GetRequiredService<EventConsumedMetrics>());
     }
 }
