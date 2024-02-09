@@ -3,6 +3,8 @@ Demo repo for scaling azure iot scenarios
 
 **Disclaimer**: This is a demo repo and not intended for production use. 
 
+![Architecture](./docs/architecture.png)
+
 ## Generate test certificates using step
 
 Use the following commands to generate test certificates using [step](https://smallstep.com/docs/step-cli/installation/). 
@@ -49,3 +51,5 @@ To split the traffic between the two hubs, create 2 enrollment groups and assign
 This demo uses Dapr to abstract the state and pubsub. So you need to have [Dapr](https://dapr.io/) installed. 
 
 The run the demo with Aspire.
+    
+    
