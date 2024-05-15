@@ -1,10 +1,10 @@
 ﻿{
   "profiles": {
-    "CommandSender": {
+    "YarpHubProxy": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": false,
-      "applicationUrl": "https://localhost:7244;http://localhost:8081",
+      "applicationUrl": "https://localhost:7279;http://localhost:8085",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

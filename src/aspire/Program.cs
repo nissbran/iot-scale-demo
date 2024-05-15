@@ -13,7 +13,12 @@ builder.AddProject<Projects.MessageRouter>("message-router")
     .WithReference(commandsComponent)
     .WithReference(deviceCatalogComponent);
 
-builder.AddProject<Projects.CommandSender>("command-sender")
+// builder.AddProject<Projects.CommandSender>("command-sender")
+//     .WithDaprSidecar()
+//     .WithReference(commandsComponent)
+//     .WithReference(deviceCatalogComponent);
+
+builder.AddProject<Projects.YarpHubProxy>("yarp-proxy")
     .WithDaprSidecar()
     .WithReference(commandsComponent)
     .WithReference(deviceCatalogComponent);

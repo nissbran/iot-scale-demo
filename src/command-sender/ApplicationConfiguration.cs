@@ -14,14 +14,6 @@ internal static class ApplicationConfiguration
         builder.Services.AddDaprClient();
         builder.Services.AddSingleton<CommandsSentMetrics>();
         builder.Services.AddServiceDiscovery();
-        builder.Services.ConfigureHttpClientDefaults(http =>
-        {
-            // Turn on resilience by default
-            http.AddStandardResilienceHandler();
-
-            // Turn on service discovery by default
-            http.UseServiceDiscovery();
-        });
         
         builder.Services.AddSingleton<IotHubSender>();
         return builder.Build();
@@ -42,6 +34,8 @@ internal static class ApplicationConfiguration
             await iotHubSender.SendCommandAsync(increaseCooling.DeviceId, "increase-cooling");
             return TypedResults.Ok();
         });
+        
+        
 
         return app;
     }

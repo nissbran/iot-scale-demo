@@ -9,14 +9,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Aspire.Hosting" Version="8.0.0-preview.2.23619.3"/>
-        <PackageReference Include="Aspire.Hosting.Dapr" Version="8.0.0-preview.2.23619.3"/>
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="8.0.0-preview.7.24251.11" />
+        <PackageReference Include="Aspire.Hosting.Dapr" Version="8.0.0-preview.7.24251.11"/>
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\command-sender\CommandSender.csproj" />
       <ProjectReference Include="..\router\MessageRouter.csproj" />
       <ProjectReference Include="..\temperature-device\TemperatureDevice.csproj" />
+      <ProjectReference Include="..\yarp-hub-proxy\YarpHubProxy.csproj" />
     </ItemGroup>
 
 </Project>
