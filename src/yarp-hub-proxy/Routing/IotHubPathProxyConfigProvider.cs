@@ -42,13 +42,13 @@ public class IotHubPathProxyConfigProvider(IConfiguration configuration) : IProx
                 
                 routeConfigs.Add(new RouteConfig()
                 {
-                    RouteId = iotHub.Key,
+                    RouteId = value,
                     ClusterId = iotHub.Key,
                     Match = new RouteMatch()
                     {
                         Path = path
                     }
-                }.WithTransformPathRemovePrefix(path));
+                }.WithTransformPathRemovePrefix($"/iothub-service/{value}"));
             }
         }
         
