@@ -2,18 +2,19 @@ targetScope = 'subscription'
 
 param rgDemo string = 'rg-iot-demo'
 param prefix string
-param location string
+param location_a string
+param location_b string
 
 resource rg_demo 'Microsoft.Resources/resourceGroups@2023-07-01' = {
   name: rgDemo
-  location: location
+  location: location_a
 }
 
 module event_hub '../modules/eventhub/eventhub.bicep' = {
   name: 'event_hub'
   scope: rg_demo
   params: {
-    location: location
+    location: location_a
     prefix: prefix
   }
 }
@@ -22,9 +23,9 @@ module iot_hub_a '../modules/iothub/iothub.bicep' = {
   name: 'iot_hub_a'
   scope: rg_demo
   params: {
-    location: location
+    location: location_a
     iotHubName: '${prefix}-iot-hub-a'
-    evenhubEndpointName: event_hub.outputs.eventHubName
+    eventhubEndpointName: event_hub.outputs.eventHubName
   }
   dependsOn: [
     event_hub
@@ -35,9 +36,9 @@ module iot_hub_b '../modules/iothub/iothub.bicep' = {
   name: 'iot_hub_b'
   scope: rg_demo
   params: {
-    location: location
+    location: location_b
     iotHubName: '${prefix}-iot-hub-b'
-    evenhubEndpointName: event_hub.outputs.eventHubName
+    eventhubEndpointName: event_hub.outputs.eventHubName
   }
   dependsOn: [
     event_hub
@@ -48,7 +49,7 @@ module dps '../modules/dps/dps.bicep' = {
   scope: rg_demo
   name: 'dps'
   params: {
-    location: location
+    location: location_b
     iotHubAName: iot_hub_a.outputs.iotName
     iotHubBName: iot_hub_b.outputs.iotName
     provisioningServiceName: '${prefix}-dps'

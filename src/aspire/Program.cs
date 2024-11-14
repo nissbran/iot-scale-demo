@@ -1,6 +1,9 @@
 using Aspire.Hosting.Dapr;
+using Microsoft.Extensions.Configuration;
 
 var builder = DistributedApplication.CreateBuilder(args);
+
+builder.Configuration.AddJsonFile("appsettings.local.json", true);
 
 var daprResourcePath = Path.Combine(builder.AppHostDirectory, "../../dapr/components/");
 var daprComponentOptions = new DaprComponentOptions() { LocalPath = daprResourcePath };
@@ -8,20 +11,25 @@ var daprComponentOptions = new DaprComponentOptions() { LocalPath = daprResource
 var commandsComponent = builder.AddDaprComponent("commands", "pubsub", daprComponentOptions); 
 var deviceCatalogComponent = builder.AddDaprComponent("device-catalog", "state", daprComponentOptions);
 
-builder.AddProject<Projects.MessageRouter>("message-router")
-    .WithDaprSidecar()
-    .WithReference(commandsComponent)
-    .WithReference(deviceCatalogComponent);
-
-// builder.AddProject<Projects.CommandSender>("command-sender")
+// builder.AddProject<Projects.MessageRouter>("message-router")
 //     .WithDaprSidecar()
 //     .WithReference(commandsComponent)
 //     .WithReference(deviceCatalogComponent);
 
-builder.AddProject<Projects.YarpHubProxy>("yarp-proxy")
+builder.AddProject<Projects.MessageMediator>("message-mediator")
     .WithDaprSidecar()
     .WithReference(commandsComponent)
     .WithReference(deviceCatalogComponent);
+
+builder.AddProject<Projects.CommandSender>("command-sender")
+    .WithDaprSidecar()
+    .WithReference(commandsComponent)
+    .WithReference(deviceCatalogComponent);
+
+// builder.AddProject<Projects.YarpHubProxy>("yarp-proxy")
+//     .WithDaprSidecar()
+//     .WithReference(commandsComponent)
+//     .WithReference(deviceCatalogComponent);
 
 //builder.AddProject<Projects.TemperatureDevice>("device-sim-1");
 

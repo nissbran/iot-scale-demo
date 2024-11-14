@@ -9,6 +9,7 @@ services:
       GlobalDeviceEndpoint: "global.azure-devices-provisioning.net"
       IdScope: ${DPS_ID_SCOPE}
       DevicePrefix: "1a"
+      RootCertFile: "/app/certs/huba_root.pem"
       IntermediateCertFile: "/app/certs/huba_intermediate.pem"
       IntermediateCertKey: "/app/certs/huba_intermediate.key"
       IntermediateCertPasswordFile: "/app/certs/huba.pass"
@@ -24,6 +25,7 @@ services:
       GlobalDeviceEndpoint: "global.azure-devices-provisioning.net"
       IdScope: ${DPS_ID_SCOPE}
       DevicePrefix: "1b"
+      RootCertFile: "/app/certs/hubb_root.pem"
       IntermediateCertFile: "/app/certs/hubb_intermediate.pem"
       IntermediateCertKey: "/app/certs/hubb_intermediate.key"
       IntermediateCertPasswordFile: "/app/certs/hubb.pass"

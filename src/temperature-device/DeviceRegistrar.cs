@@ -24,7 +24,8 @@ public class DeviceRegistrar
     public async Task<TemperatureIotHubDevice> RegisterDeviceAsync(string deviceName, CancellationToken stoppingToken = default)
     {
         var certificate = _clientCertificateGenerator.GenerateClientCert(deviceName);
-        using var security = new SecurityProviderX509Certificate(certificate);
+        var certificateChain = _clientCertificateGenerator.GetCertificateChain();
+        using var security = new SecurityProviderX509Certificate(certificate, certificateChain);
         using var transport = new ProvisioningTransportHandlerMqtt();
         
         var provisioningDeviceClient = ProvisioningDeviceClient.Create(

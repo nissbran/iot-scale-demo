@@ -14,21 +14,23 @@ step ca init --deployment-type standalone --name huba --dns localhost --address 
 step ca init --deployment-type standalone --name hubb --dns localhost --address 127.0.0.1:443 --provisioner HubBProvisoner --context hubb
 ```
 
-The copy and rename the intermediate certificate and key to the `certs` folder. 
+The copy and rename the root certificate to the `certs` folder. Used in the certificate chain.  
+
+```pwsh
+copy $Env:USERPROFILE/.step/authorities/huba/certs/root_ca.crt -d ./certs/huba_root.pem
+copy $Env:USERPROFILE/.step/authorities/hubb/certs/root_ca.crt -d ./certs/hubb_root.pem
+```
+
+The copy and rename the intermediate certificate and key to the `certs` folder. Used to create the device certificates.
 
 ```pwsh
 copy $Env:USERPROFILE/.step/authorities/huba/certs/intermediate_ca.crt -d ./certs/huba_intermediate.pem
 copy $Env:USERPROFILE/.step/authorities/hubb/certs/intermediate_ca.crt -d ./certs/hubb_intermediate.pem
-```
-
-The copy the and rename key file. 
-
-```pwsh
 copy $Env:USERPROFILE/.step/authorities/huba/secrets/intermediate_ca_key* -d ./certs/huba_intermediate.key
 copy $Env:USERPROFILE/.step/authorities/hubb/secrets/intermediate_ca_key* -d ./certs/hubb_intermediate.key
 ```
 
-Create password files for the simulated devices. 
+Create password files for the client certificate generation. 
 
 ```pwsh
 $Env:password = "<your cert password>"

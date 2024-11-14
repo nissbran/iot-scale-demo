@@ -5,12 +5,14 @@ namespace TemperatureDevice;
 
 public class ClientCertificateGenerator
 {
+    private readonly string? _rootCertFile;
     private readonly string? _intermediateCertFile;
     private readonly string? _intermediateCertKey;
     private readonly string? _intermediateCertPasswordFile;
     
     public ClientCertificateGenerator(IConfiguration configuration)
     {
+        _rootCertFile = configuration["RootCertFile"];
         _intermediateCertFile = configuration["IntermediateCertFile"];
         _intermediateCertKey = configuration["IntermediateCertKey"];
         _intermediateCertPasswordFile = configuration["IntermediateCertPasswordFile"];
@@ -32,5 +34,13 @@ public class ClientCertificateGenerator
             X509Certificate2.CreateFromPemFile($"./clientCerts/{clientAuthName}.pem", $"./clientCerts/{clientAuthName}.key")
             .Export(X509ContentType.Pkcs12));
         return certificate;
+    }
+    
+    public X509Certificate2Collection GetCertificateChain()
+    {
+        var certificateCollection = new X509Certificate2Collection();
+        certificateCollection.ImportFromPemFile(_rootCertFile);
+        certificateCollection.ImportFromPemFile(_intermediateCertFile);
+        return certificateCollection;
     }
 }

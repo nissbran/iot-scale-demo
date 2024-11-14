@@ -21,9 +21,6 @@ internal static class ApplicationConfiguration
         {
             // Turn on resilience by default
             http.AddStandardResilienceHandler();
-
-            // Turn on service discovery by default
-            http.UseServiceDiscovery();
         });
 
         builder.Services.AddSingleton<IKafkaConnectionProvider, EventHubKafkaConnectionProvider>();

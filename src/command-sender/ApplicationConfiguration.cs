@@ -35,8 +35,6 @@ internal static class ApplicationConfiguration
             return TypedResults.Ok();
         });
         
-        
-
         return app;
     }
 }

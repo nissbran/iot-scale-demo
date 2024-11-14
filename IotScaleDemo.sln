@@ -20,6 +20,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommandSender", "src\comman
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YarpHubProxy", "src\yarp-hub-proxy\YarpHubProxy.csproj", "{C2376168-0DFD-47E3-91D6-8B8C839016DB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageMediator", "src\message-mediator\MessageMediator.csproj", "{4DBC6430-0EF0-478C-AF25-A560D146CA47}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +52,10 @@ Global
 		{C2376168-0DFD-47E3-91D6-8B8C839016DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2376168-0DFD-47E3-91D6-8B8C839016DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2376168-0DFD-47E3-91D6-8B8C839016DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DBC6430-0EF0-478C-AF25-A560D146CA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DBC6430-0EF0-478C-AF25-A560D146CA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DBC6430-0EF0-478C-AF25-A560D146CA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DBC6430-0EF0-478C-AF25-A560D146CA47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

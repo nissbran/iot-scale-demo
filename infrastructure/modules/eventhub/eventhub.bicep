@@ -1,7 +1,7 @@
 param prefix string
 param location string
 
-resource eventHubNs 'Microsoft.EventHub/namespaces@2021-11-01' = {
+resource eventHubNs 'Microsoft.EventHub/namespaces@2024-01-01' = {
   name: '${prefix}-eh-ns'
   location: location
   sku: {
@@ -15,7 +15,7 @@ resource eventHubNs 'Microsoft.EventHub/namespaces@2021-11-01' = {
   }
 }
 
-resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
+resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2024-01-01' = {
   parent: eventHubNs
   name: 'iot-events'
   properties: {
@@ -24,12 +24,12 @@ resource eventHub 'Microsoft.EventHub/namespaces/eventhubs@2021-11-01' = {
   }
 }
 
-resource eventHubMessageRouter 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2021-11-01' = {
+resource eventHubMessageRouter 'Microsoft.EventHub/namespaces/eventhubs/consumergroups@2024-01-01' = {
   parent: eventHub
   name: 'message-router'
 }
 
-resource eventHubSharedKey 'Microsoft.EventHub/namespaces/authorizationRules@2021-11-01' = {
+resource eventHubSharedKey 'Microsoft.EventHub/namespaces/authorizationRules@2024-01-01' = {
   name: 'iot-hubs-shared-key'
   parent: eventHubNs
   properties: {

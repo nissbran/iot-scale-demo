@@ -13,13 +13,13 @@ param skuName string = 'S1'
 @maxValue(1)
 param capacityUnits int = 1
 
-param evenhubEndpointName string
+param eventhubEndpointName string
 
 resource eh 'Microsoft.EventHub/namespaces@2023-01-01-preview' existing = {
-  name: evenhubEndpointName
+  name: eventhubEndpointName
 }
 
-resource sharedAccessPolicy 'Microsoft.EventHub/namespaces/authorizationRules@2023-01-01-preview' existing = {
+resource sharedAccessPolicy 'Microsoft.EventHub/namespaces/authorizationRules@2024-01-01' existing = {
   name: 'iot-hubs-shared-key'
   parent: eh
 }
