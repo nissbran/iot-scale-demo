@@ -11,11 +11,6 @@ var daprComponentOptions = new DaprComponentOptions() { LocalPath = daprResource
 var commandsComponent = builder.AddDaprComponent("commands", "pubsub", daprComponentOptions); 
 var deviceCatalogComponent = builder.AddDaprComponent("device-catalog", "state", daprComponentOptions);
 
-// builder.AddProject<Projects.MessageRouter>("message-router")
-//     .WithDaprSidecar()
-//     .WithReference(commandsComponent)
-//     .WithReference(deviceCatalogComponent);
-
 builder.AddProject<Projects.MessageMediator>("message-mediator")
     .WithDaprSidecar()
     .WithReference(commandsComponent)
@@ -26,11 +21,8 @@ builder.AddProject<Projects.CommandSender>("command-sender")
     .WithReference(commandsComponent)
     .WithReference(deviceCatalogComponent);
 
-// builder.AddProject<Projects.YarpHubProxy>("yarp-proxy")
-//     .WithDaprSidecar()
-//     .WithReference(commandsComponent)
-//     .WithReference(deviceCatalogComponent);
+builder.AddProject<Projects.TelemetryIngestionApi>("telemetry-ingestion-api");
 
-//builder.AddProject<Projects.TemperatureDevice>("device-sim-1");
+builder.AddProject<Projects.TemperatureDevice>("temperature-device");
 
 builder.Build().Run();

@@ -20,6 +20,7 @@
       <ProjectReference Include="..\command-sender\CommandSender.csproj" />
       <ProjectReference Include="..\message-mediator\MessageMediator.csproj" />
       <ProjectReference Include="..\router\MessageRouter.csproj" />
+      <ProjectReference Include="..\telemetry-ingestion-api\TelemetryIngestionApi.csproj" />
       <ProjectReference Include="..\temperature-device\TemperatureDevice.csproj" />
       <ProjectReference Include="..\yarp-hub-proxy\YarpHubProxy.csproj" />
     </ItemGroup>

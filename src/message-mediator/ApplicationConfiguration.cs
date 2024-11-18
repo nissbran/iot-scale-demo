@@ -22,7 +22,7 @@ internal static class ApplicationConfiguration
         builder.Services.AddSingleton<IKafkaConnectionProvider, EventHubKafkaConnectionProvider>();
         builder.Services.AddHostedService<ConsumerService>();
         builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssemblyContaining<Program>());
-        
+
         return builder.Build();
     }
 
@@ -33,7 +33,7 @@ internal static class ApplicationConfiguration
         {
             app.MapPrometheusScrapingEndpoint().RequireHost("*:9090");
         }
-
+        
         return app;
     }
 }

@@ -12,6 +12,7 @@ public class DeviceRegistrar
     private readonly ILogger<DeviceRegistrar> _logger;
     private readonly string? _globalDeviceEndpoint;
     private readonly string? _idScope;
+    private readonly string? _telemetryIngestionEndpoint;
 
     public DeviceRegistrar(ClientCertificateGenerator clientCertificateGenerator, IConfiguration configuration, ILogger<DeviceRegistrar> logger)
     {
@@ -19,6 +20,7 @@ public class DeviceRegistrar
         _logger = logger;
         _globalDeviceEndpoint = configuration["GlobalDeviceEndpoint"];
         _idScope = configuration["IdScope"];
+        _telemetryIngestionEndpoint = configuration["TelemetryIngestionEndpoint"];
     }
     
     public async Task<TemperatureIotHubDevice> RegisterDeviceAsync(string deviceName, CancellationToken stoppingToken = default)
@@ -45,7 +47,7 @@ public class DeviceRegistrar
         
             _logger.LogInformation("Device {DeviceId} registered to {AssignedHub} with {Status}", registrationResult.DeviceId, registrationResult.AssignedHub, registrationResult.Status);
         
-            return new TemperatureIotHubDevice(certificate, registrationResult.DeviceId, registrationResult.AssignedHub);
+            return new TemperatureIotHubDevice(certificate, registrationResult.DeviceId, registrationResult.AssignedHub, _telemetryIngestionEndpoint);
         }
         catch (Exception e)
         {

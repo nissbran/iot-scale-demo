@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using System.Text.Json;
+using CommandSender.Contract;
 using CommandSender.Telemetry;
 using Dapr.Client;
 using Microsoft.Azure.Devices;
@@ -22,14 +24,13 @@ public class IotHubSender
         };
     }
     
-    public async ValueTask SendCommandAsync(string deviceId, string command)
+    public async ValueTask SendCommandAsync(string deviceId, Command command)
     {
         var registrationState = await _client.GetStateAsync<DeviceRegistrationState>("device-catalog", deviceId);
         
-        var messageBody = $"{{\"deviceId\": \"{deviceId}\"}}";
-        using var message = new Message(Encoding.UTF8.GetBytes(messageBody));
+        using var message = new Message(JsonSerializer.SerializeToUtf8Bytes(command));
         message.Ack = DeliveryAcknowledgement.Full;
-        message.Properties["command-name"] = command;
+        message.Properties["command-name"] = command.Name;
         var hubClient = _iotHubs[registrationState.AssignedHub];
         await hubClient.SendAsync(deviceId, message);
         _commandsSentMetrics.IncrementCommandSent();

@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YarpHubProxy", "src\yarp-hu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageMediator", "src\message-mediator\MessageMediator.csproj", "{4DBC6430-0EF0-478C-AF25-A560D146CA47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryIngestionApi", "src\telemetry-ingestion-api\TelemetryIngestionApi.csproj", "{B513679B-7E23-4A89-A59F-C8FACFCA532D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -56,6 +58,10 @@ Global
 		{4DBC6430-0EF0-478C-AF25-A560D146CA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DBC6430-0EF0-478C-AF25-A560D146CA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DBC6430-0EF0-478C-AF25-A560D146CA47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B513679B-7E23-4A89-A59F-C8FACFCA532D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B513679B-7E23-4A89-A59F-C8FACFCA532D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B513679B-7E23-4A89-A59F-C8FACFCA532D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B513679B-7E23-4A89-A59F-C8FACFCA532D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
