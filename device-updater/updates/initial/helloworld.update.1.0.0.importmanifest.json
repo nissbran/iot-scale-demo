@@ -1,0 +1,41 @@
+﻿{
+    "updateId": {
+        "provider": "Azure",
+        "name": "HelloWorldUpdate",
+        "version": "1.0.0"
+    },
+    "isDeployable": true,
+    "compatibility": [
+        {
+            "manufacturer": "contoso",
+            "model": "demo"
+        }
+    ],
+    "instructions": {
+        "steps": [
+            {
+                "description": "helloworld script",
+                "handler": "microsoft/script:1",
+                "handlerProperties": {
+                    "scriptFileName": "installscript.sh",
+                    "arguments": "",
+                    "installedCriteria": "1.0.0"
+                },
+                "files": [
+                    "installscript.sh"
+                ]
+            }
+        ]
+    },
+    "files": [
+        {
+            "filename": "installscript.sh",
+            "sizeInBytes": 14629,
+            "hashes": {
+                "sha256": "vUhDaudlXJ8gW2y5DxyRfab4xOMnsfw/O6HznEWloCA="
+            }
+        }
+    ],
+    "createdDateTime": "2025-02-18T14:30:05.3448763Z",
+    "manifestVersion": "4.0"
+}

@@ -1,0 +1,10 @@
+[provisioning]
+source = "manual"
+iothub_hostname = "<your iothub_hostname>"
+device_id = "deviceUpdaterDemo02"
+
+[provisioning.authentication]
+method = "x509"
+
+identity_cert = "file:///etc/aziot/certs/deviceUpdaterDemo02.pem"
+identity_pk = "file:///etc/aziot/certs/deviceUpdaterDemo02.key.pem"

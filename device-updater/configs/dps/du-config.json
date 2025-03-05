@@ -1,0 +1,21 @@
+{
+    "schemaVersion": "1.0",
+    "aduShellTrustedUsers": [
+        "adu",
+        "do"
+    ],
+    "manufacturer": "contoso",
+    "model": "demo",
+    "agents": [
+        {
+            "name": "aduagent",
+            "runas": "adu",
+            "connectionSource": {
+                "connectionType": "AIS",
+                "connectionData": ""
+            },
+            "manufacturer": "contoso",
+            "model": "demo"
+        }
+    ]
+}

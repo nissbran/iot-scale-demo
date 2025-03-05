@@ -1,0 +1,21 @@
+{
+    "schemaVersion": "1.0",
+    "aduShellTrustedUsers": [
+        "adu",
+        "do"
+    ],
+    "manufacturer": "compulab",
+    "model": "iot8",
+    "agents": [
+        {
+            "name": "aduagent",
+            "runas": "adu",
+            "connectionSource": {
+                "connectionType": "AIS",
+                "connectionData": ""
+            },
+            "manufacturer": "compulab",
+            "model": "iot8"
+        }
+    ]
+}

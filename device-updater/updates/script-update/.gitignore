@@ -1,0 +1,5 @@
+*.img.xz
+*.img.xz.sha256
+*.img.xz.sig
+*.swu
+*.gz

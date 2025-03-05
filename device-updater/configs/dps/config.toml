@@ -1,0 +1,15 @@
+# DPS provisioning with X.509 certificate
+[provisioning]
+source = "dps"
+global_endpoint = "https://global.azure-devices-provisioning.net"
+id_scope = "<your id_scope>"
+
+# Uncomment to send a custom payload during DPS registration
+# payload = { uri = "PATH_TO_JSON_FILE" }
+
+[provisioning.attestation]
+method = "x509"
+registration_id = "deviceUpdaterDemo01"
+
+identity_cert = "file:///var/aziot/certs/deviceUpdaterDemo01.pem"
+identity_pk = "file:///var/aziot/certs/deviceUpdaterDemo01.key.pem"
