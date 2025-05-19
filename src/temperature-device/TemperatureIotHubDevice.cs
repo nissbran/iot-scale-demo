@@ -56,7 +56,7 @@ public class TemperatureIotHubDevice : IDisposable
         {
             try
             {
-                var temperatureMessage = new TemperatureTelemetry(_deviceId, new Random().Next(10, 31));
+                var temperatureMessage = new TemperatureTelemetry(_deviceId, new Random().Next(5, 36));
                 await SendTelemetryMessage(stoppingToken, temperatureMessage);
 
                 if (temperatureMessage.Temperature >= 30)
