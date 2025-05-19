@@ -63,6 +63,10 @@ public class TemperatureIotHubDevice : IDisposable
                 {
                     await SendMessage(stoppingToken, new TemperatureTooHighAlert(_deviceId, 30, temperatureMessage.Temperature));
                 }
+                else if (temperatureMessage.Temperature <= 15)
+                {
+                    await SendMessage(stoppingToken, new TemperatureTooLowAlert(_deviceId, 15, temperatureMessage.Temperature));
+                }
 
                 await Task.Delay(1000, stoppingToken);
             }

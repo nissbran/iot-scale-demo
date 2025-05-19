@@ -36,6 +36,12 @@ public class TemperatureTooHighAlert : CommandMessage, IRequest<MessageHandlingR
     public decimal Temperature { get; init; }
 }
 
+public class TemperatureTooLowAlert : CommandMessage, IRequest<MessageHandlingResult>
+{
+    public decimal Threshold { get; init; }
+    public decimal Temperature { get; init; }
+}
+
 public class DeviceConnected : CommandMessage, IRequest<MessageHandlingResult>
 {
     public string SequenceNumber { get; init; }
