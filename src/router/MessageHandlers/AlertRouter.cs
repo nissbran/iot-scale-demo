@@ -22,4 +22,23 @@ public class AlertRouter(DaprClient daprClient, EventConsumedMetrics eventConsum
     }
 }
 
+public class TemperatureTooLowAlertRouter(DaprClient daprClient, EventConsumedMetrics eventConsumedMetrics, ILogger<DeviceRegistrationHandler> logger) : MessageHandler<TemperatureTooLowAlert>
+{
+    public override async ValueTask<MessageHandlingResult> Handle(TemperatureTooLowAlert message)
+    {
+        try
+        {
+            await daprClient.PublishEventAsync("commands", "commands", new IncreaseHeating(message.DeviceId));
+        }
+        catch (Exception e)
+        {
+            logger.LogError(e, "Error publishing command");
+            return new MessageHandlingResult(false, e.Message);
+        }
+        eventConsumedMetrics.IncrementAlertsRaised();
+        return new MessageHandlingResult(true);
+    }
+}
+
 public record IncreaseCooling(string DeviceId);
+public record IncreaseHeating(string DeviceId);

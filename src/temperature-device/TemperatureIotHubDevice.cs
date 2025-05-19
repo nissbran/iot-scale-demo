@@ -63,6 +63,10 @@ public class TemperatureIotHubDevice : IDisposable
                 {
                     await SendMessage(stoppingToken, new TemperatureTooHighAlert(_deviceId, 30, temperatureMessage.Temperature));
                 }
+                else if (temperatureMessage.Temperature <= 15)
+                {
+                    await SendMessage(stoppingToken, new TemperatureTooLowAlert(_deviceId, 15, temperatureMessage.Temperature));
+                }
 
                 await Task.Delay(1000, stoppingToken);
             }
@@ -101,10 +105,20 @@ public class TemperatureIotHubDevice : IDisposable
         while (!_stopping && !stoppingToken.IsCancellationRequested)
         {
             var commands = await _client.ReceiveAsync(stoppingToken);
-
-            Log.Information("Device {DeviceId} received command {CommandName}.", _deviceId, commands?.Properties["command-name"]);
-
-            await _client.CompleteAsync(commands, stoppingToken);
+            
+            if (commands != null)
+            {
+                string commandName = commands.Properties["command-name"];
+                Log.Information("Device {DeviceId} received command {CommandName}.", _deviceId, commandName);
+                
+                if (commandName == "IncreaseHeating")
+                {
+                    Log.Information("Device {DeviceId} increasing heating.", _deviceId);
+                    // Here would be the actual logic to increase heating
+                }
+                
+                await _client.CompleteAsync(commands, stoppingToken);
+            }
         }
     }
 
