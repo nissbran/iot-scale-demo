@@ -12,3 +12,8 @@ public class IncreaseCoolingCommand(string DeviceId): Command
 {
     public override string Name => "IncreaseCooling";
 }
+
+public class IncreaseHeatingCommand(string DeviceId): Command
+{
+    public override string Name => "IncreaseHeating";
+}

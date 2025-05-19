@@ -35,6 +35,12 @@ internal static class ApplicationConfiguration
             return TypedResults.Ok();
         });
         
+        app.MapPost("handler/heating/increase", [Topic("commands", "commands")] async (IotHubSender iotHubSender, [FromBody]IncreaseHeating increaseHeating) =>
+        {
+            await iotHubSender.SendCommandAsync(increaseHeating.DeviceId, new IncreaseHeatingCommand(increaseHeating.DeviceId));
+            return TypedResults.Ok();
+        });
+        
         return app;
     }
 }
